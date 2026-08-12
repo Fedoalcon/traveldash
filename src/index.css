@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #0f172a; /* slate-900 */
+  color: #f8fafc; /* slate-50 */
+}
+
+/* Custom leaflet tooltip styling */
+.leaflet-tooltip.dark-tooltip {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border: 1px solid #334155 !important;
+  border-radius: 0.5rem !important;
+  padding: 0.5rem 0.75rem !important;
+  font-family: ui-sans-serif, system-ui, sans-serif !important;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+}
+
+.leaflet-tooltip.dark-tooltip::before {
+  border-top-color: #1e293b !important;
+}
+.leaflet-tooltip-left.dark-tooltip::before {
+  border-left-color: #1e293b !important;
+}
+.leaflet-tooltip-right.dark-tooltip::before {
+  border-right-color: #1e293b !important;
+}
+.leaflet-tooltip-bottom.dark-tooltip::before {
+  border-bottom-color: #1e293b !important;
+}
+
+/* Custom leaflet popup styling */
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+}
+.leaflet-popup-content-wrapper {
+  border: 1px solid #334155 !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+}
+.leaflet-popup-content {
+  margin: 10px 12px !important;
+  font-family: ui-sans-serif, system-ui, sans-serif !important;
+}
+.leaflet-popup-close-button {
+  color: #9ca3af !important;
+}
+.leaflet-popup-close-button:hover {
+  color: #f8fafc !important;
+}
+
+/* Fix leaflet background in dark mode */
+.leaflet-container {
+  background: #111111 !important; 
+}
+
+/* Remove default browser focus outline when clicking on paths or map */
+.leaflet-container:focus,
+.leaflet-interactive:focus {
+  outline: none !important;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+/* Hide tooltips on touch devices to prevent double popups with Popup */
+@media (hover: none) and (pointer: coarse) {
+  .leaflet-tooltip {
+    display: none !important;
+  }
+}
+
