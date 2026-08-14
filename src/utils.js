@@ -86,6 +86,16 @@ export function evaluateItineraryState(itinerary, now = new Date()) {
       }
     }
 
+    const getTransportLabel = (medio) => {
+      switch (medio) {
+        case 'avion': return 'Vuelo';
+        case 'tren': return 'Tren';
+        case 'bus': return 'Bus';
+        case 'barco': return 'Ferry';
+        default: return 'Viaje';
+      }
+    };
+
     if (lastPastEvent && nextFutureEvent) {
       currentState = {
         event: {
@@ -94,7 +104,7 @@ export function evaluateItineraryState(itinerary, now = new Date()) {
             nextEvent: nextFutureEvent
         },
         statusType: ESTADOS.TRANSITO,
-        status: `En tránsito en ${lastPastEvent.tipo === 'transporte' ? lastPastEvent.destino.nombre : lastPastEvent.ciudad}. Próximo: ${nextFutureEvent.tipo === 'transporte' ? 'Vuelo' : 'Check-in'} a las ${new Date(nextFutureEvent.tipo === 'transporte' ? nextFutureEvent.fechaSalida : nextFutureEvent.checkIn).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`,
+        status: `En tránsito en ${lastPastEvent.tipo === 'transporte' ? lastPastEvent.destino.nombre : lastPastEvent.ciudad}. Próximo: ${nextFutureEvent.tipo === 'transporte' ? getTransportLabel(nextFutureEvent.medio) : 'Check-in'} a las ${new Date(nextFutureEvent.tipo === 'transporte' ? nextFutureEvent.fechaSalida : nextFutureEvent.checkIn).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`,
       };
       
       // Mark the gap conceptually by modifying the last event or adding a state flag (for UI purposes)
@@ -103,7 +113,7 @@ export function evaluateItineraryState(itinerary, now = new Date()) {
        currentState = {
         event: null,
         statusType: ESTADOS.FUTURO,
-        status: `Viaje no iniciado. Próximo: ${nextFutureEvent.tipo === 'transporte' ? 'Viaje' : 'Check-in'} el ${new Date(nextFutureEvent.tipo === 'transporte' ? nextFutureEvent.fechaSalida : nextFutureEvent.checkIn).toLocaleDateString()}`
+        status: `Viaje no iniciado. Próximo: ${nextFutureEvent.tipo === 'transporte' ? getTransportLabel(nextFutureEvent.medio) : 'Check-in'} el ${new Date(nextFutureEvent.tipo === 'transporte' ? nextFutureEvent.fechaSalida : nextFutureEvent.checkIn).toLocaleDateString()}`
        }
     } else if (lastPastEvent && !nextFutureEvent) {
         currentState = {
