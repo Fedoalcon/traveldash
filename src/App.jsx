@@ -108,6 +108,7 @@ function App() {
               currentState={currentState} 
               onEventClick={handleEventClick} 
               hideTitle={true}
+              isMobileFloating={true}
               className="p-3 shadow-lg border-b border-slate-700/50 bg-slate-900/90 backdrop-blur-md"
             />
           </div>

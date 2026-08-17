@@ -63,13 +63,19 @@ export function evaluateItineraryState(itinerary, now = new Date()) {
 
   // Mark the first future event as 'isProximo'
   let foundProximo = false;
+  let nextFutureEventGlobal = null;
   const eventsWithProximo = processedEvents.map(ev => {
     if (ev.state === ESTADOS.FUTURO && !foundProximo) {
       foundProximo = true;
+      nextFutureEventGlobal = ev;
       return { ...ev, isProximo: true };
     }
     return { ...ev, isProximo: false };
   });
+
+  if (currentState.event) {
+    currentState.nextEvent = nextFutureEventGlobal;
+  }
 
   // Check for 'En Tránsito' (gaps)
   if (!currentState.event) {

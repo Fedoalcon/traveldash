@@ -34,11 +34,20 @@ export const CurrentStateCard = ({ currentState, onEventClick, className = '', h
             const mLeft = Math.max(0, minsLeft) % 60;
             const timeLeft = hLeft > 0 ? `${hLeft}h ${mLeft}m` : `${mLeft}m`;
             
+            const nextStr = isMobileFloating && currentState.nextEvent ? (
+              currentState.nextEvent.tipo === 'transporte'
+                ? `${currentState.nextEvent.medio ? currentState.nextEvent.medio.charAt(0).toUpperCase() + currentState.nextEvent.medio.slice(1) : 'Viaje'} a ${currentState.nextEvent.destino?.nombre} (${formatShortDate(currentState.nextEvent.fechaSalida)})`
+                : `${currentState.nextEvent.hotel || currentState.nextEvent.ciudad} (${formatShortDate(currentState.nextEvent.checkIn)})`
+            ) : null;
+            
             return (
               <div className="text-xs text-slate-400 mt-2 space-y-1 border-t border-slate-700/50 pt-2">
                 <p><span className="text-slate-500">Sale:</span> {formatShortDate(ev.fechaSalida)}</p>
                 <p><span className="text-slate-500">Llega:</span> {formatShortDate(ev.fechaLlegada)}</p>
                 <p className="text-emerald-400/90 font-medium mt-1 pt-1">Faltan {timeLeft} para arribar</p>
+                {nextStr && (
+                  <p className="text-emerald-400/90 font-medium mt-1 line-clamp-2 leading-tight">Próximo: {nextStr}</p>
+                )}
               </div>
             );
           })()}
@@ -57,11 +66,20 @@ export const CurrentStateCard = ({ currentState, onEventClick, className = '', h
                timeLeftStr = hLeft > 0 ? `${hLeft}h ${mLeft}m` : `${mLeft}m`;
             }
             
+            const nextStr = isMobileFloating && currentState.nextEvent ? (
+              currentState.nextEvent.tipo === 'transporte'
+                ? `${currentState.nextEvent.medio ? currentState.nextEvent.medio.charAt(0).toUpperCase() + currentState.nextEvent.medio.slice(1) : 'Viaje'} a ${currentState.nextEvent.destino?.nombre} (${formatShortDate(currentState.nextEvent.fechaSalida)})`
+                : `${currentState.nextEvent.hotel || currentState.nextEvent.ciudad} (${formatShortDate(currentState.nextEvent.checkIn)})`
+            ) : null;
+            
             return (
               <div className="text-xs text-slate-400 mt-2 space-y-1 border-t border-slate-700/50 pt-2">
                 <p><span className="text-slate-500">Check-in:</span> {formatShortDate(ev.checkIn)}</p>
                 <p><span className="text-slate-500">Check-out:</span> {formatShortDate(ev.checkOut)}</p>
                 <p className="text-emerald-400/90 font-medium mt-1 pt-1">Quedan {timeLeftStr} de estadía</p>
+                {nextStr && (
+                  <p className="text-emerald-400/90 font-medium mt-1 line-clamp-2 leading-tight">Próximo: {nextStr}</p>
+                )}
               </div>
             );
           })()}
