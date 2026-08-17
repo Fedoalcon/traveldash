@@ -3,7 +3,7 @@ import { ESTADOS, getColorForState } from './utils';
 import { Plane, Train, Hotel, MapPin, CheckCircle2, Clock, Moon, Sun, Map as MapIcon } from 'lucide-react';
 import { format, parseISO, differenceInMinutes } from 'date-fns';
 
-export const CurrentStateCard = ({ currentState, onEventClick, className = '', hideTitle = false }) => {
+export const CurrentStateCard = ({ currentState, onEventClick, className = '', hideTitle = false, isMobileFloating = false }) => {
   const formatShortDate = (dateString) => {
     return format(parseISO(dateString), 'd MMM, HH:mm');
   };
