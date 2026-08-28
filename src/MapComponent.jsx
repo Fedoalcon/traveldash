@@ -64,8 +64,18 @@ const MapController = ({ events, setMapRef, currentState }) => {
 
 
 const MapComponent = ({ events, currentState, setMapRef, mapTheme = 'dark_all' }) => {
-  const tileUrl = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}";
-  const attribution = '&copy; <a href="https://www.esri.com/">Esri</a>, DeLorme, NAVTEQ';
+  let tileUrl = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}";
+  let referenceUrl = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}";
+  let attribution = '&copy; <a href="https://www.esri.com/">Esri</a>, DeLorme, NAVTEQ';
+
+  if (mapTheme === 'light_all') {
+    tileUrl = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}";
+    referenceUrl = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}";
+  } else if (mapTheme === 'voyager') {
+    tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+    referenceUrl = null;
+    attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+  }
 
   const formatFlightDuration = (start, end) => {
     const mins = differenceInMinutes(new Date(end), new Date(start));
@@ -82,6 +92,7 @@ const MapComponent = ({ events, currentState, setMapRef, mapTheme = 'dark_all' }
       zoomControl={false}
     >
       <TileLayer url={tileUrl} attribution={attribution} />
+      {referenceUrl && <TileLayer url={referenceUrl} />}
       
       <MapController events={events} setMapRef={setMapRef} currentState={currentState} />
 
