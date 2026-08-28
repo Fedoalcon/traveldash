@@ -64,11 +64,8 @@ const MapController = ({ events, setMapRef, currentState }) => {
 
 
 const MapComponent = ({ events, currentState, setMapRef, mapTheme = 'dark_all' }) => {
-  let tileUrl = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
-  if (mapTheme === 'light_all') tileUrl = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
-  else if (mapTheme === 'voyager') tileUrl = "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
-  
-  const attribution = '&copy; <a href="https://carto.com/attributions">CARTO</a>';
+  const tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+  const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
   const formatFlightDuration = (start, end) => {
     const mins = differenceInMinutes(new Date(end), new Date(start));
@@ -84,7 +81,7 @@ const MapComponent = ({ events, currentState, setMapRef, mapTheme = 'dark_all' }
       style={{ height: '100%', width: '100%' }}
       zoomControl={false}
     >
-      <TileLayer url={tileUrl} attribution={attribution} />
+      <TileLayer url={tileUrl} attribution={attribution} className={mapTheme === 'dark_all' ? 'dark-tiles' : ''} />
       
       <MapController events={events} setMapRef={setMapRef} currentState={currentState} />
 
