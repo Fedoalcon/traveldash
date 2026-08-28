@@ -64,8 +64,8 @@ const MapController = ({ events, setMapRef, currentState }) => {
 
 
 const MapComponent = ({ events, currentState, setMapRef, mapTheme = 'dark_all' }) => {
-  const tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-  const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+  const tileUrl = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}";
+  const attribution = '&copy; <a href="https://www.esri.com/">Esri</a>, DeLorme, NAVTEQ';
 
   const formatFlightDuration = (start, end) => {
     const mins = differenceInMinutes(new Date(end), new Date(start));
@@ -76,12 +76,12 @@ const MapComponent = ({ events, currentState, setMapRef, mapTheme = 'dark_all' }
 
   return (
     <MapContainer 
-      center={[0, 0]} 
+      center={[20, 0]} 
       zoom={2} 
       style={{ height: '100%', width: '100%' }}
       zoomControl={false}
     >
-      <TileLayer url={tileUrl} attribution={attribution} className={mapTheme === 'dark_all' ? 'dark-tiles' : ''} />
+      <TileLayer url={tileUrl} attribution={attribution} />
       
       <MapController events={events} setMapRef={setMapRef} currentState={currentState} />
 
